@@ -13,11 +13,12 @@ export default function Home() {
       </h1>
       <p>Eu sou a: {nome}</p>
       <Image 
-      className={styles.imagem}
-      src={"/imagens/OIP.jpg"} 
-      alt={"imagem"} 
-      width={850} 
-      height={500} 
+        className={styles.imagem}
+        src={"/imagens/OIP.jpg"} 
+        alt={"imagem"} 
+        layout="responsive" 
+        width={850} 
+        height={500} 
       />
       <p>Esses aqui são Percy Anne e grover ^</p>
     </div>

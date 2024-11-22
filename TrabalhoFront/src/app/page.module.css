@@ -1,5 +1,5 @@
-.imagem{
-    border-radius: 20px;
-    display: block;
-    margin: auto;
-}
+.imagem {
+    max-width: 100%;
+    height: auto;
+  }
+  
