@@ -31,7 +31,11 @@ export default function Header() {
                         <li>
                             <Link href="/" className={style.link}>Inicial</Link>
                         </li>
+                        <li>
+                        <Link href="/listas" className={style.link}>Raças</Link>
+                        </li>
                     </ul>
+                    
                 </nav>
             }
         </header>
