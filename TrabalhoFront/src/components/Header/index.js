@@ -32,7 +32,10 @@ export default function Header() {
                             <Link href="/" className={style.link}>Inicial</Link>
                         </li>
                         <li>
-                        <Link href="/listas" className={style.link}>Raças</Link>
+                           <Link href="/listas" className={style.link}>Raças</Link>
+                        </li>
+                        <li>
+                           <Link href="/filter" className={style.link}>filtro</Link>
                         </li>
                     </ul>
                     
