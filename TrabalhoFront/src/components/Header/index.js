@@ -37,6 +37,9 @@ export default function Header() {
                         <li>
                            <Link href="/filter" className={style.link}>filtro</Link>
                         </li>
+                        <li>
+                           <Link href="/TOp" className={style.link}>efeitos</Link>
+                        </li>
                     </ul>
                     
                 </nav>
