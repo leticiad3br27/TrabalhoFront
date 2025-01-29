@@ -37,9 +37,9 @@ export default function Efeitos (){
     },[ufSelected])
     return (
         <div>
-            <h1>Efeitos colaterais / Use Effect</h1>
+            <h1>Efeitos colaterais/ Use Effect</h1>
             {
-                <select onChange={(ev) => {setUfSelected(ev.target.value), setCitySelected('')}}>
+                <select onChange={(ev) => {setUfselected(ev.target.value), setCitySelected('')}}>
                     <option value=""> Selecione o estado</option>
                     {ufs.map((uf) => (
                         <option 
