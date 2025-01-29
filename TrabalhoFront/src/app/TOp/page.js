@@ -1,79 +1,80 @@
-'use client';
-import { useState, useEffect } from 'react';
+"use client";
+import { useEffect,useState } from "react";
 
-
-
-
-export default function Batalha() {
-  const [vidaUsuario, setVidaUsuario] = useState(100);
-  const [vidaMonstro, setVidaMonstro] = useState(100);
-  const [golpes, setGolpes] = useState(0);
-  const [imagemMonstro, setImagemMonstro] = useState(monstroVivo);
-  const [mensagem, setMensagem] = useState('');
-  const [atacando, setAtacando] = useState(false);
-
-  useEffect(() => {
-    if (vidaMonstro <= 0) {
-      setImagemMonstro(monstroMorto);
-      setMensagem('Você venceu!');
-    } else if (vidaUsuario <= 0) {
-      setMensagem('Você perdeu!');
+export default function Efeitos (){
+    const[ufs,setUfs]=useState([]);
+    const[ufSelected,setUfselected]=useState('');
+    const[cities,setCities]=useState([]);
+    const[citySelected,setCitySelected]= useState('');
+    const getUfs=async() => {
+        try{
+            const response = await response.json();
+            setUfs(data);
+            console.log(data);
+        } catch (error){
+            console.log('deu ruim'+error)
+        }
     }
-  }, [vidaMonstro, vidaUsuario]);
-
-  useEffect(() => {
-    const intervalo = setInterval(() => {
-      if (vidaMonstro > 0 && vidaUsuario > 0) {
-        setAtacando(true);
-        setTimeout(() => {
-          setVidaUsuario(vidaUsuario - 5);
-          setAtacando(false);
-        }, 500);
-      }
-    }, 2000);
-    return () => clearInterval(intervalo);
-  }, [vidaMonstro, vidaUsuario]);
-
-  useEffect(() => {
-    if (atacando) {
-      setImagemMonstro(monstroAtacando);
-    } else {
-      setImagemMonstro(monstroVivo);
+    const getCities= async() =>{
+        try{
+            const response =await fetch(`https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufSelected}municipios?orderBy=nome`);
+            if (!response.ok){
+                throw new Error ('Error ao buscar dados:' + response.statusText);
+            }
+            const data = await response.json();
+            setCities(data);
+            console.log(data);
+        } catch (error){
+            console.log('deu ruim'+ error)
+        }
     }
-  }, [atacando]);
+    useEffect(() => {
+        getUfs();
+    },[])
 
-  const atacar = () => {
-    if (vidaMonstro > 0) {
-      setVidaMonstro(vidaMonstro - 10);
-      setGolpes(golpes + 1);
-    }
-  };
+    useEffect(() => {
+        getCities();
+    },[ufSelected])
+    return (
+        <div>
+            <h1>Efeitos colaterais / Use Effect</h1>
+            {
+                <select onChange={(ev) => {setUfSelected(ev.target.value), setCitySelected('')}}>
+                    <option value=""> Selecione o estado</option>
+                    {ufs.map((uf) => (
+                        <option 
+                            value={uf.id} 
+                            key={uf.id}>
+                            {`${uf.nome} - ${uf.sigla}`}
+                        </option>
+                    ))}
+                </select>
+                // <ul>
+                //     {ufs.map(uf => (
+                //         <li key={uf.id}>{uf.nome}</li>
+                //     ))}
+                // </ul>
+            }
 
-  const defender = () => {
-    if (vidaUsuario < 100) {
-      setVidaUsuario(Math.min(vidaUsuario + 10, 100));
-    }
-  };
-
-  const reiniciar = () => {
-    setVidaUsuario(100);
-    setVidaMonstro(100);
-    setGolpes(0);
-    setImagemMonstro(monstroVivo);
-    setMensagem('');
-  };
-
-  return (
-    <div>
-      <h1>Batalha contra o Monstro</h1>
-      <img src={imagemMonstro} alt="Monstro" />
-      <p>Vida do Usuário: {vidaUsuario}</p>
-      <p>Vida do Monstro: {vidaMonstro}</p>
-      <p>Golpes: {golpes}</p>
-      <p>{mensagem}</p>
-      <button onClick={atacar}>Atacar</button>
-      <button onClick={defender}>Defender</button>
-      <button onClick={reiniciar}>Reiniciar</button>
-    </div>
-  );
+            {
+                <select onChange={(ev) => setCitySelected(ev.target.value)}>
+                    <option value=""> Selecione a cidade</option>
+                    {cities.map((city) => (
+                        <option
+                            value={city.nome}
+                            key={city.id}>
+                            {`${city.nome}`}
+                        </option>
+                    ))}
+                </select>
+            }
+            {citySelected?<p>{citySelected}</p>:<p>Aguardando!</p>}
+            {/* <h1>Efeitos colaterais / Use Effect</h1>
+            <button onClick={() => {setCont(cont + 1)}}>Adicionar</button>
+            <p>Renderizações cont 1: {cont}</p>
+            <button onClick={() => {setCont2(cont2 + 1)}}>Adicionar</button>
+            <p>Renderizações cont 2: {cont2}</p> */}
+        </div>
+    )
 }
+    
